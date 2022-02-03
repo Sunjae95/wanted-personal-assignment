@@ -18,8 +18,6 @@ const IconButton = ({ direction, isClicked }) => (
 IconButton.propTypes = {
   direction: PropTypes.shape({
     top: PropTypes.number.isRequired,
-    bottom: PropTypes.number.isRequired,
-    right: PropTypes.number.isRequired,
     left: PropTypes.number.isRequired,
   }).isRequired,
   isClicked: PropTypes.bool.isRequired,
@@ -32,10 +30,10 @@ const TagContainer = styled.div`
   position: absolute;
   ${({ direction }) => css`
     top: ${direction.top}px;
-    bottom: ${direction.bottom}px;
-    right: ${direction.right}px;
     left: ${direction.left}px;
   `}
+
+  cursor: pointer;
 `;
 
 export default IconButton;
