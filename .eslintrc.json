@@ -30,6 +30,12 @@
     ],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "import/prefer-default-export": 0,
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "comma-dangle": "off",
+    "no-new": "off",
+    "consistent-return": "off",
+    "no-unused-vars": "off",
+    "operator-linebreak": "off",
+    "react/forbid-prop-types": "off"
   }
 }

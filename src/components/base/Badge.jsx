@@ -3,15 +3,15 @@ import styled from '@emotion/styled';
 import { BadgeImage } from 'assets';
 import PropTypes from 'prop-types';
 
-const Badge = ({ number }) => (
+const Badge = ({ discountRate }) => (
   <Container>
-    {number}
+    {discountRate}
     <Percent>%</Percent>
   </Container>
 );
 
 Badge.proptype = {
-  number: PropTypes.number.isRequired,
+  discountRate: PropTypes.number.isRequired,
 };
 
 const Container = styled.div`
