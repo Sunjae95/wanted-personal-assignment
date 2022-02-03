@@ -3,25 +3,58 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { CloseImage, OpenImage } from 'assets';
+import Tooltip from './Tooltip';
 
-const IconButton = ({ productId, direction, isFocus }) => (
-  <TagContainer id={productId} direction={direction}>
-    <img
-      src={isFocus ? OpenImage : CloseImage}
-      alt=""
-      width={32}
-      height={32}
-    />
-  </TagContainer>
-);
+const IconButton = ({
+  productInfo, isFocus, imageContainer
+}) => {
+  const {
+    productId,
+    pointX,
+    pointY,
+    imageUrl,
+    discountRate,
+    productName,
+    priceDiscount,
+  } = productInfo;
 
+  const position = ((pointX, pointY) => {
+    const top = pointX * 1.6;
+    const left = pointY * 1.6;
+
+    return { top, left };
+  })(pointX, pointY);
+
+  const isTrue = (() => isFocus === productId)();
+
+  return (
+    <TagContainer id={productId} position={position}>
+      <img
+        src={isTrue ? OpenImage : CloseImage}
+        alt=""
+        width={32}
+        height={32}
+      />
+      {isTrue && (
+      <Tooltip
+        imageContainer={imageContainer}
+        position={position}
+        imageUrl={imageUrl}
+        discountRate={discountRate}
+        productName={productName}
+        priceDiscount={priceDiscount}
+      />
+      )}
+    </TagContainer>
+  );
+};
+
+IconButton.defaultProps = {
+  isFocus: null,
+};
 IconButton.propTypes = {
-  productId: PropTypes.number.isRequired,
-  direction: PropTypes.shape({
-    top: PropTypes.number.isRequired,
-    left: PropTypes.number.isRequired,
-  }).isRequired,
-  isFocus: PropTypes.bool.isRequired,
+  productInfo: PropTypes.object.isRequired,
+  isFocus: PropTypes.number,
 };
 
 const TagContainer = styled.div`
@@ -29,9 +62,9 @@ const TagContainer = styled.div`
   height: 40px;
 
   position: absolute;
-  ${({ direction }) => css`
-    top: ${direction.top}px;
-    left: ${direction.left}px;
+  ${({ position }) => css`
+    top: ${position.top}px;
+    left: ${position.left}px;
   `}
 
   cursor: pointer;

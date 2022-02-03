@@ -1,30 +1,32 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { IconButton } from 'components/base';
 
 const ViewContent = ({
   id, imageUrl, productList, isFocus, onClick
-}) => (
-  <Container id={id} onClick={onClick}>
-    <ViewContentImage src={imageUrl} alt="" />
-    {productList &&
-      productList.map((prodcutItem) => {
-        const { productId, pointX, pointY } = prodcutItem;
-        const direction = { top: pointX * 1.6, left: pointY * 1.6 };
-        const hasFocus = isFocus === productId;
+}) => {
+  const imageRef = useRef(null);
+
+  return (
+    <Container id={id} onClick={onClick}>
+      <ViewContentImage src={imageUrl} alt="" ref={imageRef} />
+      {productList &&
+      productList.map((productItem) => {
+        const { productId } = productItem;
 
         return (
           <IconButton
             key={productId}
-            productId={productId}
-            direction={direction}
-            isFocus={hasFocus}
+            imageContainer={imageRef.current}
+            productInfo={productItem}
+            isFocus={isFocus}
           />
         );
       })}
-  </Container>
-);
+    </Container>
+  );
+};
 
 ViewContent.defaultProps = {
   isFocus: null
