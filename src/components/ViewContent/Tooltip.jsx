@@ -5,36 +5,22 @@ import { MoveIcon, TooltipTail } from 'assets';
 import { css } from '@emotion/react';
 
 const Tooltip = ({
-  imageUrl, discountRate, productName, priceDiscount, position, imageContainer
+  imageContainer, position, productInfo,
 }) => {
-  const discountPrice = discountRate ? `${discountRate}%` : '예상가';
+  const {
+    imageUrl, productName, outside, priceDiscount, discountRate
+  } = productInfo;
+  const expectationPrice = outside ? '예상가' : `${discountRate}%`;
   const price = priceDiscount.toLocaleString();
-  const calcPosition = (({ top, left }) => {
-    const { offsetWidth, offsetHeight } = imageContainer;
-    const middleTop = offsetHeight / 2;
-    const middleLeft = offsetWidth / 2;
-
-    if (top < middleTop && left >= middleLeft) {
-      return 1;
-    }
-    if (top < middleTop && left < middleLeft) {
-      return 2;
-    }
-    if (top >= middleTop && left < middleLeft) {
-      return 3;
-    }
-    if (top >= middleTop && left >= middleLeft) {
-      return 4;
-    }
-  })(position);
+  const computedPosition = getPosition({ imageContainer, position });
 
   return (
-    <Container position={calcPosition}>
+    <Container position={computedPosition}>
       <ToolTipImage imageUrl={imageUrl} />
       <Wrapper>
         <FurnitureName>{productName}</FurnitureName>
         <FurniturePrice>
-          <ExpectationPrice isDiscountRate={discountRate > 0}>{discountPrice}</ExpectationPrice>
+          <ExpectationPrice outside={outside}>{expectationPrice}</ExpectationPrice>
           <PriceDiscount>{price}</PriceDiscount>
         </FurniturePrice>
       </Wrapper>
@@ -43,15 +29,9 @@ const Tooltip = ({
   );
 };
 
-Tooltip.defaultProps = {
-  discountRate: undefined,
-};
 Tooltip.propTypes = {
-  imageUrl: PropTypes.string.isRequired,
-  discountRate: PropTypes.number,
-  productName: PropTypes.string.isRequired,
-  priceDiscount: PropTypes.number.isRequired,
-  position: PropTypes.object.isRequired
+  position: PropTypes.object.isRequired,
+  productInfo: PropTypes.object.isRequired,
 };
 
 const Container = styled.span`
@@ -178,7 +158,7 @@ const FurniturePrice = styled.div`
 
 const ExpectationPrice = styled.span`
     color: #ff585d;
-    ${({ isDiscountRate }) => !isDiscountRate && css`
+    ${({ outside }) => outside && css`
         font-size: 11px;
         color: #898f94;
     `}
@@ -206,5 +186,25 @@ const MoveIconWrapper = styled.div`
         height: 20px;
     }
 `;
+
+const getPosition = ({ position, imageContainer }) => {
+  const { top, left } = position;
+  const { offsetWidth, offsetHeight } = imageContainer;
+  const middleTop = offsetHeight / 2;
+  const middleLeft = offsetWidth / 2;
+
+  if (top < middleTop && left >= middleLeft) {
+    return 1;
+  }
+  if (top < middleTop && left < middleLeft) {
+    return 2;
+  }
+  if (top >= middleTop && left < middleLeft) {
+    return 3;
+  }
+  if (top >= middleTop && left >= middleLeft) {
+    return 4;
+  }
+};
 
 export default Tooltip;

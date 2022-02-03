@@ -1,23 +1,10 @@
 import Main from 'components/Main';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { GlobalStyle } from 'style';
-import getProductInfo from 'utils/api';
+import useProductInfo from 'utils/useProductInfo';
 
 const App = () => {
-  const [productInfo, setProductInfo] = useState(null);
-  async function getData() {
-    try {
-      const data = await getProductInfo();
-
-      setProductInfo(data);
-    } catch (e) {
-      setProductInfo('error');
-    }
-  }
-
-  useEffect(() => {
-    getData();
-  }, []);
+  const { productInfo } = useProductInfo();
 
   if (!productInfo) return <div>로딩중...</div>;
   if (productInfo === 'error') return <div>데이터불러오기 에러!!</div>;

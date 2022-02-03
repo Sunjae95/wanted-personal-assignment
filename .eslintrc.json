@@ -37,6 +37,7 @@
     "no-unused-vars": "off",
     "operator-linebreak": "off",
     "react/forbid-prop-types": "off",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "no-use-before-define": "off"
   }
 }

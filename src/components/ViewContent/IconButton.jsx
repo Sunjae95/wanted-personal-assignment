@@ -11,11 +11,7 @@ const IconButton = ({
   const {
     productId,
     pointX,
-    pointY,
-    imageUrl,
-    discountRate,
-    productName,
-    priceDiscount,
+    pointY
   } = productInfo;
 
   const position = ((pointX, pointY) => {
@@ -30,7 +26,7 @@ const IconButton = ({
   return (
     <TagContainer id={productId} position={position}>
       <img
-        src={isTrue ? OpenImage : CloseImage}
+        src={isTrue ? CloseImage : OpenImage}
         alt=""
         width={32}
         height={32}
@@ -39,10 +35,7 @@ const IconButton = ({
       <Tooltip
         imageContainer={imageContainer}
         position={position}
-        imageUrl={imageUrl}
-        discountRate={discountRate}
-        productName={productName}
-        priceDiscount={priceDiscount}
+        productInfo={productInfo}
       />
       )}
     </TagContainer>

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { Badge, ImageBox } from 'components/base';
 import { css } from '@emotion/react';
+import Badge from './Badge';
+import ImageBox from './ImageBox';
 
 const SliderItem = ({ info, isFocus, onClick }) => {
   const { productId, imageUrl, discountRate } = info;

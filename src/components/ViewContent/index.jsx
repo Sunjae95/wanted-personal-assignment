@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { IconButton } from 'components/base';
+import IconButton from './IconButton';
 
 const ViewContent = ({
   id, imageUrl, productList, isFocus, onClick
