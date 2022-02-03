@@ -3,22 +3,38 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { IconButton } from 'components/base';
 
-const ViewContent = ({ imageUrl, productList }) => (
-  <Container>
+const ViewContent = ({
+  id, imageUrl, productList, isFocus, onClick
+}) => (
+  <Container id={id} onClick={onClick}>
     <ViewContentImage src={imageUrl} alt="" />
     {productList &&
-      productList.map((info) => {
-        const { pointX, pointY, productId } = info;
+      productList.map((prodcutItem) => {
+        const { productId, pointX, pointY } = prodcutItem;
         const direction = { top: pointX * 1.6, left: pointY * 1.6 };
+        const hasFocus = isFocus === productId;
 
-        return <IconButton key={productId} direction={direction} isClicked />;
+        return (
+          <IconButton
+            key={productId}
+            productId={productId}
+            direction={direction}
+            isFocus={hasFocus}
+          />
+        );
       })}
   </Container>
 );
 
+ViewContent.defaultProps = {
+  isFocus: null
+};
 ViewContent.propTypes = {
+  id: PropTypes.number.isRequired,
   imageUrl: PropTypes.string.isRequired,
   productList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  isFocus: PropTypes.number,
+  onClick: PropTypes.func.isRequired,
 };
 
 const Container = styled.div`

@@ -4,10 +4,10 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { CloseImage, OpenImage } from 'assets';
 
-const IconButton = ({ direction, isClicked }) => (
-  <TagContainer direction={direction}>
+const IconButton = ({ productId, direction, isFocus }) => (
+  <TagContainer id={productId} direction={direction}>
     <img
-      src={isClicked ? OpenImage : CloseImage}
+      src={isFocus ? OpenImage : CloseImage}
       alt=""
       width={32}
       height={32}
@@ -16,11 +16,12 @@ const IconButton = ({ direction, isClicked }) => (
 );
 
 IconButton.propTypes = {
+  productId: PropTypes.number.isRequired,
   direction: PropTypes.shape({
     top: PropTypes.number.isRequired,
     left: PropTypes.number.isRequired,
   }).isRequired,
-  isClicked: PropTypes.bool.isRequired,
+  isFocus: PropTypes.bool.isRequired,
 };
 
 const TagContainer = styled.div`

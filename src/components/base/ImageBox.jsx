@@ -7,7 +7,7 @@ const ImageBox = styled.div`
 
   width: 106px;
   height: 106px;
-  border: 1px solid #ffffff;
+  border: 0.5px solid #aaafb9;
 
   position: relative;
   cursor: pointer;

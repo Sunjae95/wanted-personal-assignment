@@ -4,15 +4,32 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import SliderItem from './SliderItem';
 
-const Slider = ({ productList }) => (
+const Slider = ({ productList, isFocus, onClick }) => (
   <Container>
     {productList &&
-      productList.map((info, i) => <SliderItem key={i} info={info} />)}
+      productList.map((prodcutItem) => {
+        const { productId } = prodcutItem;
+        const hasFocus = productId === isFocus;
+
+        return (
+          <SliderItem
+            key={productId}
+            info={prodcutItem}
+            isFocus={hasFocus}
+            onClick={onClick}
+          />
+        );
+      })}
   </Container>
 );
 
+Slider.defaultProps = {
+  isFocus: null
+};
 Slider.propTypes = {
   productList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  isFocus: PropTypes.number,
+  onClick: PropTypes.func.isRequired
 };
 
 const Container = styled.div`
