@@ -1,14 +1,18 @@
 import axios from 'axios';
+import { API_URL } from './constants';
 
 const getProductInfo = async () => {
   try {
-    const productInfo = await axios.get(
-      'https://cdn.ggumim.co.kr/test/image_product_link.json'
-    );
+    const { data } = await axios.get(API_URL);
 
-    return productInfo.data;
+    return {
+      data,
+      success: true,
+    };
   } catch {
-    new Error('데이터 불러오기 실패!');
+    return {
+      success: false,
+    };
   }
 };
 

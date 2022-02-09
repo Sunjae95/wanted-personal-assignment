@@ -1,21 +1,18 @@
+/* eslint-disable no-unused-expressions */
 import { useEffect, useState } from 'react';
 import getProductInfo from './api';
+import { ERROR } from './constants';
 
 const useProductInfo = () => {
   const [productInfo, setProductInfo] = useState(null);
-  async function getData() {
-    try {
-      const data = await getProductInfo();
 
-      setProductInfo(data);
-    } catch (e) {
-      setProductInfo('error');
-    }
-  }
+  const getData = async () => {
+    const { data, success } = await getProductInfo();
 
-  useEffect(() => {
-    getData();
-  }, []);
+    success ? setProductInfo(data) : setProductInfo(ERROR);
+  };
+
+  useEffect(getData, []);
 
   return { productInfo };
 };
