@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { CloseImage, OpenImage } from 'assets';
-import { IMG, SELECTED } from 'utils/constants';
+import { dynamicId } from 'utils/constants';
 import Tooltip from './Tooltip';
 
 const IconButton = ({
@@ -24,7 +24,7 @@ const IconButton = ({
     return { top, left };
   })(pointX, pointY);
 
-  const selectId = isSelected ? `${SELECTED}_${productId}` : `${IMG}_${productId}`;
+  const selectId = dynamicId(isSelected, productId);
 
   return (
     <TagContainer id={productId} position={position}>

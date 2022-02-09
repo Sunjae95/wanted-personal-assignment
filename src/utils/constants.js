@@ -3,3 +3,4 @@ export const ERROR = 'error';
 export const BACK = 'back';
 export const IMG = 'img';
 export const SELECTED = 'selected';
+export const dynamicId = (isSelected, id) => (isSelected ? `${SELECTED}_${id}` : `${IMG}_${id}`);

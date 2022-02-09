@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import { IMG, SELECTED } from 'utils/constants';
+import { dynamicId } from 'utils/constants';
 import Badge from './Badge';
 import ImageBox from './ImageBox';
 
 const SliderItem = ({ info, isSelected, onClick }) => {
   const { productId, imageUrl, discountRate } = info;
-  const selectId = isSelected ? `${SELECTED}_${productId}` : `${IMG}_${productId}`;
+  const selectId = dynamicId(isSelected, productId);
 
   return (
     <Container isSelected={isSelected}>
