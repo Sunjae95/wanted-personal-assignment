@@ -13,17 +13,8 @@ const Main = ({ productInfo }) => {
     const { id } = e.currentTarget;
     const [targetName, targetId] = id.split('_');
 
-    if (targetName === BACK) {
-      setSelected(null);
-      return;
-    }
-    if (targetName === IMG) {
-      setSelected(Number(targetId));
-      return;
-    }
-    if (targetName === SELECTED) {
-      setSelected(null);
-    }
+    const nextState = targetName === IMG ? Number(targetId) : null;
+    setSelected(nextState);
   }, []);
 
   return (
