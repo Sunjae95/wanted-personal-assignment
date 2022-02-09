@@ -2,16 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import { IMG, SELECTED } from 'utils/constants';
 import Badge from './Badge';
 import ImageBox from './ImageBox';
 
-const SliderItem = ({ info, isFocus, onClick }) => {
+const SliderItem = ({ info, isSelected, onClick }) => {
   const { productId, imageUrl, discountRate } = info;
+  const selectId = isSelected ? `${SELECTED}_${productId}` : `${IMG}_${productId}`;
 
   return (
-    <Container isFocus={isFocus} onClick={onClick}>
-      <ImageBox id={productId} imageUrl={imageUrl}>
-        {discountRate > 0 && <Badge discountRate={discountRate} />}
+    <Container isSelected={isSelected}>
+      <ImageBox id={selectId} onClick={onClick} imageUrl={imageUrl}>
+        {discountRate > 0 && <Badge id={`img_${productId}`} discountRate={discountRate} />}
       </ImageBox>
     </Container>
   );
@@ -19,7 +21,7 @@ const SliderItem = ({ info, isFocus, onClick }) => {
 
 SliderItem.propTypes = {
   info: PropTypes.object.isRequired,
-  isFocus: PropTypes.bool.isRequired,
+  isSelected: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired
 };
 
@@ -30,7 +32,7 @@ const Container = styled.div`
   height: fit-content;
   margin: 28px 6px;
   
-  ${({ isFocus }) => isFocus && css`
+  ${({ isSelected }) => isSelected && css`
     margin: 26px 4px;
     padding: 2px;
     background: linear-gradient(
@@ -41,4 +43,4 @@ const Container = styled.div`
   `};
 `;
 
-export default SliderItem;
+export default React.memo(SliderItem);

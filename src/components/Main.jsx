@@ -1,25 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { BACK, IMG, SELECTED } from 'utils/constants';
 import ViewContent from './ViewContent';
 import Slider from './Slider';
 
 const Main = ({ productInfo }) => {
   const { id, imageUrl, productList } = productInfo;
-  const [isFocus, setIsFocus] = useState(null);
+  const [selected, setSelected] = useState(null);
 
-  const handleFocus = (e) => {
-    const targetDiv = e.target.closest('div');
-    const targetDivId = Number(targetDiv.id);
-    const nextFocus = id === targetDivId ? null : targetDivId;
+  const handleFocus = useCallback((e) => {
+    const { id } = e.currentTarget;
+    const [targetName, targetId] = id.split('_');
 
-    if (isFocus === targetDivId) {
-      setIsFocus(null);
+    if (targetName === BACK) {
+      setSelected(null);
       return;
     }
-
-    setIsFocus(nextFocus);
-  };
+    if (targetName === IMG) {
+      setSelected(Number(targetId));
+      return;
+    }
+    if (targetName === SELECTED) {
+      setSelected(null);
+    }
+  }, []);
 
   return (
     <Container>
@@ -27,12 +32,12 @@ const Main = ({ productInfo }) => {
         id={id}
         imageUrl={imageUrl}
         productList={productList}
-        isFocus={isFocus}
+        selected={selected}
         onClick={handleFocus}
       />
       <Slider
         productList={productList}
-        isFocus={isFocus}
+        selected={selected}
         onClick={handleFocus}
       />
     </Container>

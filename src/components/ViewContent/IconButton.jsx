@@ -1,12 +1,15 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { CloseImage, OpenImage } from 'assets';
+import { IMG, SELECTED } from 'utils/constants';
 import Tooltip from './Tooltip';
 
 const IconButton = ({
-  productInfo, isFocus, imageContainer
+  productInfo, isSelected, imageContainer, onClick
 }) => {
   const {
     productId,
@@ -21,17 +24,19 @@ const IconButton = ({
     return { top, left };
   })(pointX, pointY);
 
-  const isTrue = (() => isFocus === productId)();
+  const selectId = isSelected ? `${SELECTED}_${productId}` : `${IMG}_${productId}`;
 
   return (
     <TagContainer id={productId} position={position}>
       <img
-        src={isTrue ? CloseImage : OpenImage}
+        id={selectId}
+        src={isSelected ? CloseImage : OpenImage}
         alt=""
         width={32}
         height={32}
+        onClick={onClick}
       />
-      {isTrue && (
+      {isSelected && (
       <Tooltip
         imageContainer={imageContainer}
         position={position}
@@ -43,11 +48,11 @@ const IconButton = ({
 };
 
 IconButton.defaultProps = {
-  isFocus: null,
+  isSelected: false,
 };
 IconButton.propTypes = {
   productInfo: PropTypes.object.isRequired,
-  isFocus: PropTypes.number,
+  isSelected: PropTypes.bool,
 };
 
 const TagContainer = styled.div`
@@ -62,5 +67,5 @@ const TagContainer = styled.div`
 
   cursor: pointer;
 `;
-
-export default IconButton;
+// 리액트 메모
+export default React.memo(IconButton);

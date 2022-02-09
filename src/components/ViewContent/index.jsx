@@ -1,26 +1,34 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { BACK } from 'utils/constants';
 import IconButton from './IconButton';
 
 const ViewContent = ({
-  id, imageUrl, productList, isFocus, onClick
+  id, imageUrl, productList, selected, onClick
 }) => {
   const imageRef = useRef(null);
 
   return (
-    <Container id={id} onClick={onClick}>
-      <ViewContentImage src={imageUrl} alt="" ref={imageRef} />
-      {productList &&
-      productList.map((productItem) => {
+    <Container>
+      <ViewContentImage
+        src={imageUrl}
+        alt=""
+        ref={imageRef}
+        id={`${BACK}_${id}`}
+        onClick={onClick}
+      />
+      {productList?.map((productItem) => {
         const { productId } = productItem;
+        const isSelected = selected === productId;
 
         return (
           <IconButton
             key={productId}
             imageContainer={imageRef.current}
             productInfo={productItem}
-            isFocus={isFocus}
+            isSelected={isSelected}
+            onClick={onClick}
           />
         );
       })}
@@ -29,13 +37,13 @@ const ViewContent = ({
 };
 
 ViewContent.defaultProps = {
-  isFocus: null
+  selected: null
 };
 ViewContent.propTypes = {
   id: PropTypes.number.isRequired,
   imageUrl: PropTypes.string.isRequired,
   productList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  isFocus: PropTypes.number,
+  selected: PropTypes.number,
   onClick: PropTypes.func.isRequired,
 };
 
